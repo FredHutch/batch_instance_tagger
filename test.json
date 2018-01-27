@@ -1,0 +1,52 @@
+{
+   "version":"0",
+   "id":"cfd4784f-237a-24f2-393a-50ed5c106f6d",
+   "detail-type":"AWS API Call via CloudTrail",
+   "source":"aws.ec2",
+   "account":"064561331775",
+   "time":"2018-01-27T04:43:01Z",
+   "region":"us-west-2",
+   "resources":[
+
+   ],
+   "detail":{
+      "eventVersion":"1.05",
+      "userIdentity":{
+         "type":"Root",
+         "principalId":"064561331775",
+         "arn":"arn:aws:iam::064561331775:root",
+         "accountId":"064561331775",
+         "userName":"fredhutch-hse",
+         "invokedBy":"autoscaling.amazonaws.com"
+      },
+      "eventTime":"2018-01-27T04:43:01Z",
+      "eventSource":"ec2.amazonaws.com",
+      "eventName":"CreateTags",
+      "awsRegion":"us-west-2",
+      "sourceIPAddress":"autoscaling.amazonaws.com",
+      "userAgent":"autoscaling.amazonaws.com",
+      "requestParameters":{
+         "resourcesSet":{
+            "items":[
+               {
+                  "resourceId":"i-092e142d1a3ff0926"
+               }
+            ]
+         },
+         "tagSet":{
+            "items":[
+               {
+                  "key":"aws:autoscaling:groupName",
+                  "value":"mixed-asg-41bc7bd5-9d5a-348d-94fc-540f27c68705"
+               }
+            ]
+         }
+      },
+      "responseElements":{
+         "_return":true
+      },
+      "requestID":"6028edb3-dbf3-4d79-95a0-77806281316a",
+      "eventID":"40da4db0-08ca-467a-9054-f4921601ea17",
+      "eventType":"AwsApiCall"
+   }
+}

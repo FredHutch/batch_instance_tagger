@@ -10,6 +10,7 @@ import boto3
 
 def lambda_handler(event, context): # pylint: disable=unused-argument
     "here it is"
+    logging.basicConfig(level=logging.INFO)
     logger = logging.getLogger()
     logger.setLevel(logging.INFO)
     ec2_client = boto3.client("ec2")
@@ -42,7 +43,7 @@ def lambda_handler(event, context): # pylint: disable=unused-argument
             ec2_tags = []
             for key in env_tags.keys():
                 ec2_tags.append(dict(Key=key, Value=env_tags[key]))
-            logger.info("Tagging instance %s", instance_id)
+            logger.info("Tagging instance %s with tags:\n%s", instance_id, ec2_tags)
             ec2_client.create_tags(Resources=[instance_id], Tags=ec2_tags)
             return
     logger.info("Found no compute environment with which to tag instance %s", instance_id)
