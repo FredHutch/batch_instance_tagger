@@ -30,7 +30,7 @@ def lambda_handler(event, context): # pylint: disable=unused-argument
         return
     asg_name = existing_tag['value']
 
-    instance_id = event["detail"]["requestParameters"]["resourcesSet"]["items"]["resourceId"]
+    instance_id = event["detail"]["requestParameters"]["resourcesSet"]["items"][0]["resourceId"]
 
     batch_client = boto3.client("batch")
     envs = batch_client.describe_compute_environments()['computeEnvironments']
