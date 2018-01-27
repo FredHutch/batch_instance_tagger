@@ -18,6 +18,12 @@ def lambda_handler(event, context): # pylint: disable=unused-argument
     if not event['detail']['eventName'] == 'CreateTags': # should never happen
         logger.info("This is not a CreateTags event")
         return
+    if not event["detail"]["userIdentity"]["type"] == "Root":
+        logger.info("User identity type is not Root, exiting")
+        return
+    if not 'invokedBy' in event['detail']['userIdentity']:
+        logger.info("invokedBy key not found in event['detail']['userIdentity'], not tagging")
+        return
     if not event['detail']['userIdentity']['invokedBy'] == "autoscaling.amazonaws.com":
         logger.info("This event not invoked by autoscaling")
         return
@@ -32,6 +38,9 @@ def lambda_handler(event, context): # pylint: disable=unused-argument
     asg_name = existing_tag['value']
 
     instance_id = event["detail"]["requestParameters"]["resourcesSet"]["items"][0]["resourceId"]
+    if not instance_id.startswith("i-"):
+        logger.info("resource id %s is not an instance id, exiting.", instance_id)
+        return
 
     batch_client = boto3.client("batch")
     envs = batch_client.describe_compute_environments()['computeEnvironments']
