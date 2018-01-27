@@ -8,7 +8,7 @@ import logging
 
 import boto3
 
-def lambda_handler(event, context): # pylint: disable=unused-argument
+def lambda_handler(event, context): # pylint: disable=unused-argument, too-many-return-statements
     "here it is"
     logging.basicConfig(level=logging.INFO)
     logger = logging.getLogger()
