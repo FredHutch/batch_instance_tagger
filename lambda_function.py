@@ -48,7 +48,7 @@ def lambda_handler(event, context): # pylint: disable=unused-argument, too-many-
         if asg_name.startswith(env['computeEnvironmentName']):
             env_tags = env['computeResources']['tags']
             env_tags['TAGGED_BY_LAMBDA_FUNCTION'] = 'yes'
-            env_tags["aws:autoscaling:groupName"] = asg_name
+            env_tags["aws_autoscaling_groupName"] = asg_name
             ec2_tags = []
             for key in env_tags.keys():
                 ec2_tags.append(dict(Key=key, Value=env_tags[key]))
