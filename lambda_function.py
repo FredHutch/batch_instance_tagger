@@ -37,9 +37,13 @@ def lambda_handler(event, context): # pylint: disable=unused-argument, too-many-
         return
     asg_name = existing_tag['value']
 
-    instance_id = event["detail"]["requestParameters"]["resourcesSet"]["items"][0]["resourceId"]
-    if not instance_id.startswith("i-"):
-        logger.info("resource id %s is not an instance id, exiting.", instance_id)
+    # instance_id = event["detail"]["requestParameters"]["resourcesSet"]["items"][0]["resourceId"]
+    instance_ids = []
+    for item in event["detail"]["requestParameters"]["resourcesSet"]["items"]:
+        if item['resourceId'].startswith("i-"):
+            instance_ids.append(item["resourceId"])
+    if not instance_ids:
+        logger.info("No resource id was an instance ID, exiting.")
         return
 
     batch_client = boto3.client("batch")
@@ -52,7 +56,7 @@ def lambda_handler(event, context): # pylint: disable=unused-argument, too-many-
             ec2_tags = []
             for key in env_tags.keys():
                 ec2_tags.append(dict(Key=key, Value=env_tags[key]))
-            logger.info("Tagging instance %s with tags:\n%s", instance_id, ec2_tags)
-            ec2_client.create_tags(Resources=[instance_id], Tags=ec2_tags)
+            logger.info("Tagging instances %s with tags:\n%s", ",".join(instance_ids), ec2_tags)
+            ec2_client.create_tags(Resources=[instance_ids], Tags=ec2_tags)
             return
-    logger.info("Found no compute environment with which to tag instance %s", instance_id)
+    logger.info("Found no compute environment with which to tag instances %s", instance_ids)
