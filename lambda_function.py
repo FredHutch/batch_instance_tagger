@@ -57,6 +57,6 @@ def lambda_handler(event, context): # pylint: disable=unused-argument, too-many-
             for key in env_tags.keys():
                 ec2_tags.append(dict(Key=key, Value=env_tags[key]))
             logger.info("Tagging instances %s with tags:\n%s", ",".join(instance_ids), ec2_tags)
-            ec2_client.create_tags(Resources=[instance_ids], Tags=ec2_tags)
+            ec2_client.create_tags(Resources=instance_ids, Tags=ec2_tags)
             return
     logger.info("Found no compute environment with which to tag instances %s", instance_ids)
