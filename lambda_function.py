@@ -18,9 +18,9 @@ def lambda_handler(event, context): # pylint: disable=unused-argument, too-many-
     if not event['detail']['eventName'] == 'CreateTags': # should never happen
         logger.info("This is not a CreateTags event")
         return
-    if not event["detail"]["userIdentity"]["type"] == "Root":
-        logger.info("User identity type is not Root, exiting")
-        return
+    # if not event["detail"]["userIdentity"]["type"] == "Root":
+    #     logger.info("User identity type is not Root, exiting")
+    #     return
     if not 'invokedBy' in event['detail']['userIdentity']:
         logger.info("invokedBy key not found in event['detail']['userIdentity'], not tagging")
         return
